@@ -1,0 +1,31 @@
+###Dodaj polise:**
+
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+  "policyNumber": "POL-2026-001",
+  "type": "OC",
+  "holderName": "Anna Kowalska",
+  "premiumAmount": 1200.00,
+  "startDate": "2026-08-21",
+  "endDate": "2027-08-21"
+}
+###Lista polis:**
+GET http://localhost:8080/policies
+
+###Polisy po typie:**
+GET http://localhost:8080/policies/type/OC
+
+###Walidacja — brak policyNumber:**
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+  "policyNumber": "",
+  "type": "OC",
+  "holderName": "Anna Kowalska",
+  "premiumAmount": 1200.00,
+  "startDate": "2026-08-21",
+  "endDate": "2027-08-21"
+}
