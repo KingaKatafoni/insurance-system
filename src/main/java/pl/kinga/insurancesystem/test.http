@@ -29,3 +29,33 @@ Content-Type: application/json
   "startDate": "2026-08-21",
   "endDate": "2027-08-21"
 }
+
+###Lekcja 12.2
+### Dodaj polise z enumem:
+
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+ "policyNumber": "POL-2026-002",
+  "type": "AC",
+  "holderName": "Jan Nowak",
+  "premiumAmount": 2400.00,
+  "startDate": "2026-08-21",
+  "endDate": "2027-08-21"
+}
+
+###Sprobuj wyslac nieistniejacy typ:
+
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+"policyNumber": "POL-2026-003",
+"type": "NIEZNANY_TYP",
+"holderName": "Anna Nowak",
+"premiumAmount": 1000.00,
+"startDate": "2026-08-21",
+"endDate": "2027-08-21"
+}
+

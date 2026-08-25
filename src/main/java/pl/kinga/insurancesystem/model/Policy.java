@@ -1,36 +1,41 @@
 package pl.kinga.insurancesystem.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 public class Policy {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 20)
     private String policyNumber;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PolicyType type;
 
+    @Column(nullable = false, length = 100)
     private String holderName;
 
+    @Column(nullable = false)
     private BigDecimal premiumAmount;
 
+    @Column(nullable = false)
     private LocalDate startDate;
 
+    @Column(nullable = false)
     private LocalDate endDate;
 
 
     public Policy() {
     }
 
-    public Policy(String policyNumber, String type, String holderName, BigDecimal premiumAmount, LocalDate startDate, LocalDate endDate) {
+    public Policy(String policyNumber, PolicyType type, String holderName, BigDecimal premiumAmount, LocalDate startDate, LocalDate endDate) {
         this.policyNumber = policyNumber;
         this.type = type;
         this.holderName = holderName;
@@ -55,11 +60,11 @@ public class Policy {
         this.policyNumber = policyNumber;
     }
 
-    public String getType() {
+    public PolicyType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(PolicyType type) {
         this.type = type;
     }
 

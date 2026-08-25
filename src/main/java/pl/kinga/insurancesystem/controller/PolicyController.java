@@ -7,6 +7,7 @@ import pl.kinga.insurancesystem.dto.DtoMapper;
 import pl.kinga.insurancesystem.dto.PolicyRequest;
 import pl.kinga.insurancesystem.dto.PolicyResponse;
 import pl.kinga.insurancesystem.model.Policy;
+import pl.kinga.insurancesystem.model.PolicyType;
 import pl.kinga.insurancesystem.service.PolicyService;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class PolicyController {
 
     @GetMapping("/policies")
     public List<PolicyResponse> getAllPolicies() {
-        return service.getAllPolices().stream()
+        return service.getAllPolicies().stream()
                 .map(mapper::toPolicyResponse)
                 .toList();
     }
@@ -39,7 +40,7 @@ public class PolicyController {
     }
 
     @GetMapping("/policies/type/{type}")
-    public List<PolicyResponse> getPolicyByType(@PathVariable String type) {
+    public List<PolicyResponse> getPolicyByType(@PathVariable PolicyType type) {
         return service.getPoliciesByType(type).stream()
                 .map(mapper::toPolicyResponse)
                 .toList();

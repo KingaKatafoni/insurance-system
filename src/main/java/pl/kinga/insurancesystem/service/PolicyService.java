@@ -2,6 +2,7 @@ package pl.kinga.insurancesystem.service;
 
 import org.springframework.stereotype.Service;
 import pl.kinga.insurancesystem.model.Policy;
+import pl.kinga.insurancesystem.model.PolicyType;
 import pl.kinga.insurancesystem.repository.PolicyRepository;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class PolicyService {
         this.policyRepository = policyRepository;
     }
 
-    public List<Policy> getAllPolices() {
+    public List<Policy> getAllPolicies() {
         return policyRepository.findAll();
     }
 
@@ -23,7 +24,7 @@ public class PolicyService {
         return policyRepository.findById(id);
     }
 
-    public List<Policy> getPoliciesByType(String type) {
+    public List<Policy> getPoliciesByType(PolicyType type) {
         return policyRepository.findByType(type);
     }
 
