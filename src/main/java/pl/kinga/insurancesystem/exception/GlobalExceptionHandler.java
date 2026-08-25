@@ -34,4 +34,11 @@ public class GlobalExceptionHandler {
         errors.put("error", "Naruszenie ograniczen bazy danych (np. duplikat)");
         return ResponseEntity.status(409).body(errors);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleNotFound(IllegalArgumentException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", ex.getMessage());
+        return ResponseEntity.status(404).body(errors);
+    }
 }

@@ -59,3 +59,35 @@ Content-Type: application/json
 "endDate": "2027-08-21"
 }
 
+###Lekcja 12.3
+###**Dodaj agenta:**
+
+POST http://localhost:8080/agents
+Content-Type: application/json
+
+{
+  "firstName": "Anna",
+  "lastName": "Kowalska",
+  "email": "anna.kowalska@ubezpieczenia.pl"
+}
+
+###Dodaj polise (jesli jeszcze nie masz):**
+
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+"policyNumber": "POL-2026-001",
+"type": "OC",
+"holderName": "Jan Nowak",
+"premiumAmount": 1200.00,
+"startDate": "2026-08-25",
+"endDate": "2027-08-25"
+}
+
+###Przypisz polise do agenta:
+POST http://localhost:8080/agents/1/policies/1
+
+###Sprawdz agenta:
+
+GET http://localhost:8080/agents/1

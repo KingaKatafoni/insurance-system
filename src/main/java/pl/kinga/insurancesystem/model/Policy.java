@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Policy {
@@ -30,6 +32,9 @@ public class Policy {
 
     @Column(nullable = false)
     private LocalDate endDate;
+
+    @ManyToMany(mappedBy = "policies")
+    private List<Agent> agents = new ArrayList<>();
 
 
     public Policy() {
@@ -98,5 +103,13 @@ public class Policy {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public List<Agent> getAgents() {
+        return agents;
+    }
+
+    public void setAgents(List<Agent> agents) {
+        this.agents = agents;
     }
 }
