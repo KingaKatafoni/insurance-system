@@ -3,10 +3,10 @@ package pl.kinga.insurancesystem.service;
 import org.springframework.stereotype.Service;
 import pl.kinga.insurancesystem.model.Agent;
 import pl.kinga.insurancesystem.model.Policy;
+import pl.kinga.insurancesystem.model.PolicyType;
 import pl.kinga.insurancesystem.repository.AgentRepository;
 import pl.kinga.insurancesystem.repository.PolicyRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,5 +46,29 @@ public class AgentService {
         }
         agent.getPolicies().add(policy);
         return agentRepository.save(agent);
+    }
+
+    public Optional<Agent> getAgentByEmail(String email){
+        return agentRepository.findByEmail(email);
+    }
+
+    public List<Agent> getAgentByLastName(String lastName){
+        return agentRepository.findByLastName(lastName);
+    }
+
+    public List<Agent> getAgentByLastNameContaining(String fragment){
+        return agentRepository.findByLastNameContaining(fragment);
+    }
+
+    public boolean existsAgentByEmail(String email){
+        return agentRepository.existsByEmail(email);
+    }
+
+    public List<Agent> getAgentsByPolicyType(PolicyType type){
+        return agentRepository.findAgentsByPolicyType(type);
+    }
+
+    public List<Agent> getAgentsSortedByPolicyCount(){
+        return agentRepository.findAgentsSortedByPolicyCount();
     }
 }

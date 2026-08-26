@@ -7,8 +7,10 @@ import pl.kinga.insurancesystem.dto.AgentRequest;
 import pl.kinga.insurancesystem.dto.AgentResponse;
 import pl.kinga.insurancesystem.dto.DtoMapper;
 import pl.kinga.insurancesystem.model.Agent;
+import pl.kinga.insurancesystem.model.PolicyType;
 import pl.kinga.insurancesystem.service.AgentService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,6 +36,45 @@ public class AgentController {
                 .map(mapper::toAgentResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/agents/email/{email}")
+    public ResponseEntity<AgentResponse> getAgentByEmail(@PathVariable String email){
+        return agentService.getAgentByEmail(email)
+                .map(mapper::toAgentResponse)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/agents/search")
+    public List<AgentResponse> getAgentByLastNameAndFragment(
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String fragment){
+
+        if(lastName != null){
+            return agentService.getAgentByLastName(lastName).stream()
+                    .map(mapper::toAgentResponse)
+                    .toList();
+        } else if (fragment != null){
+            return agentService.getAgentByLastNameContaining(fragment).stream()
+                    .map(mapper::toAgentResponse)
+                    .toList();
+        }
+        return new ArrayList<>();
+    }
+
+    @GetMapping("/agents/by-policy-type/{type}")
+    public List<AgentResponse> getAgentsByType(@PathVariable PolicyType type){
+        return agentService.getAgentsByPolicyType(type).stream()
+                .map(mapper::toAgentResponse)
+                .toList();
+    }
+
+    @GetMapping("/agents/top")
+    public List<AgentResponse> getSortedAgents(){
+        return agentService.getAgentsSortedByPolicyCount().stream()
+                .map(mapper::toAgentResponse)
+                .toList();
     }
 
     @PostMapping("/agents")

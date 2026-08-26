@@ -85,9 +85,129 @@ Content-Type: application/json
 "endDate": "2027-08-25"
 }
 
+
 ###Przypisz polise do agenta:
 POST http://localhost:8080/agents/1/policies/1
 
 ###Sprawdz agenta:
 
 GET http://localhost:8080/agents/1
+
+###Lekcja 12.4
+###Dodanie polis
+
+###Polisa 1
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+  "policyNumber": "POL-2026-001",
+  "type": "OC",
+  "holderName": "Jan Nowak",
+  "premiumAmount": 1200.00,
+  "startDate": "2026-08-25",
+  "endDate": "2027-08-25"
+}
+
+###Polisa 2
+
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+  "policyNumber": "POL-2026-002",
+  "type": "AC",
+  "holderName": "Anna Kowalska",
+  "premiumAmount": 200.00,
+  "startDate": "2026-03-21",
+  "endDate": "2027-07-27"
+}
+
+###Polisa 3
+
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+  "policyNumber": "POL-2026-003",
+  "type": "NA_ZYCIE",
+  "holderName": "Kinga Binga",
+  "premiumAmount": 12200.00,
+  "startDate": "2026-08-26",
+  "endDate": "2027-10-21"
+}
+
+###Dodanie agentow
+###Agent 1
+POST http://localhost:8080/agents
+Content-Type: application/json
+
+{
+  "firstName": "Anna",
+  "lastName": "Kowalska",
+  "email": "anna.kowalska@ubezpieczenia.pl"
+}
+
+###Agent 2
+
+POST http://localhost:8080/agents
+Content-Type: application/json
+
+{
+"firstName": "Mariusz",
+"lastName": "Pudzianowski",
+"email": "mariusz.pudzianowski@ubezpieczenia.pl"
+}
+
+###Przypisz polise 1 do agenta 1:
+POST http://localhost:8080/agents/1/policies/1
+
+###Przypisz polise 2 do agenta 1:
+POST http://localhost:8080/agents/1/policies/2
+
+###Przypisz polise 3 do agena 2:
+POST http://localhost:8080/agents/2/policies/3
+
+
+### Policy
+GET http://localhost:8080/policies/holder/Jan Nowak
+
+###
+GET http://localhost:8080/policies/expensive?min=1000
+
+###
+GET http://localhost:8080/policies/after?date=2026-08-01
+
+###
+GET http://localhost:8080/policies/number/POL-2026-001
+
+###
+GET http://localhost:8080/policies/count/OC
+
+###Agents
+GET http://localhost:8080/agents/email/anna.kowalska@ubezpieczenia.pl
+
+###
+GET http://localhost:8080/agents/search?lastName=Kowalska
+
+###
+GET http://localhost:8080/agents/search?fragment=Kow
+
+###Lekcja 12.5
+
+GET http://localhost:8080/policies/filter?type=OC&min=500&max=2000
+
+###
+GET http://localhost:8080/policies/average/OC
+
+###
+GET http://localhost:8080/policies/search?holder=nowak
+
+###
+GET http://localhost:8080/policies/holders
+
+###
+GET http://localhost:8080/agents/by-policy-type/OC
+
+###
+GET http://localhost:8080/agents/top
