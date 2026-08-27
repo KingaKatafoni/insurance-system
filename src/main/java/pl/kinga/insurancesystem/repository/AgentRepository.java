@@ -26,4 +26,10 @@ public interface AgentRepository extends JpaRepository<Agent, Long> {
     @Query("SELECT a FROM Agent a LEFT JOIN a.policies p GROUP BY a ORDER BY COUNT(p) DESC")
     List<Agent> findAgentsSortedByPolicyCount();
 
+    @Query("SELECT a FROM Agent a LEFT JOIN FETCH a.policies WHERE a.id = :id")
+    Optional<Agent> findByIdWithPolicies(@Param("id") Long id);
+
+    @Query("SELECT DISTINCT a FROM Agent a LEFT JOIN FETCH a.policies")
+    List<Agent> findAllWithPolicies();
+
 }

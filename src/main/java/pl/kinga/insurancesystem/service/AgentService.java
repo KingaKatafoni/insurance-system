@@ -1,6 +1,7 @@
 package pl.kinga.insurancesystem.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.kinga.insurancesystem.model.Agent;
 import pl.kinga.insurancesystem.model.Policy;
 import pl.kinga.insurancesystem.model.PolicyType;
@@ -20,12 +21,15 @@ public class AgentService {
         this.policyRepository = policyRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Agent> getAllAgents(){
-        return agentRepository.findAll();
+        return agentRepository.findAllWithPolicies();
     }
 
-    public Optional<Agent> getAgentById(Long id){
-        return agentRepository.findById(id);
+
+    @Transactional(readOnly = true)
+    public Optional<Agent> getAgentById(Long id) {
+        return agentRepository.findByIdWithPolicies(id);
     }
 
     public Agent createAgent(Agent agent){
@@ -33,7 +37,7 @@ public class AgentService {
     }
 
     public Agent assignPolicyToAgent(Long agentId, Long policyId){
-        Agent agent = agentRepository.findById(agentId)
+        Agent agent = agentRepository.findByIdWithPolicies(agentId)
                 .orElseThrow(
                         () -> new IllegalArgumentException("Agent with id " + agentId + " does not exist")
                 );
@@ -48,27 +52,59 @@ public class AgentService {
         return agentRepository.save(agent);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Agent> getAgentByEmail(String email){
         return agentRepository.findByEmail(email);
     }
 
+    @Transactional(readOnly = true)
     public List<Agent> getAgentByLastName(String lastName){
         return agentRepository.findByLastName(lastName);
     }
 
+    @Transactional(readOnly = true)
     public List<Agent> getAgentByLastNameContaining(String fragment){
         return agentRepository.findByLastNameContaining(fragment);
     }
 
+    @Transactional(readOnly = true)
     public boolean existsAgentByEmail(String email){
         return agentRepository.existsByEmail(email);
     }
 
+    @Transactional(readOnly = true)
     public List<Agent> getAgentsByPolicyType(PolicyType type){
         return agentRepository.findAgentsByPolicyType(type);
     }
 
+    @Transactional(readOnly = true)
     public List<Agent> getAgentsSortedByPolicyCount(){
         return agentRepository.findAgentsSortedByPolicyCount();
+    }
+
+
+    @Transactional
+    public void transferPolicy(Long fromAgentId, Long toAgentId, Long policyId){
+        Agent fromAgent = agentRepository.findByIdWithPolicies(fromAgentId).orElseThrow(
+                () -> new IllegalArgumentException("Not found Agent with id " + fromAgentId)
+        );
+
+        Policy policy = policyRepository.findById(policyId).orElseThrow(
+                () -> new IllegalArgumentException("Not found Policy with id " + policyId)
+        );
+
+        if (!fromAgent.getPolicies().contains(policy)){
+            throw new IllegalStateException("Policy " + policyId + " is not assign to Agent " + fromAgentId);
+        }
+
+        fromAgent.getPolicies().remove(policy);
+        agentRepository.save(fromAgent);
+
+        Agent toAgent = agentRepository.findByIdWithPolicies(toAgentId).orElseThrow(
+                () -> new IllegalArgumentException("Not found Agent with id " + toAgentId)
+        );
+
+        toAgent.getPolicies().add(policy);
+        agentRepository.save(toAgent);
     }
 }

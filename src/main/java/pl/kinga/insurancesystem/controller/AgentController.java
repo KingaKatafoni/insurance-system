@@ -89,4 +89,14 @@ public class AgentController {
         Agent agent = agentService.assignPolicyToAgent(agentId, policyId);
         return mapper.toAgentResponse(agent);
     }
+
+    @PostMapping("/agents/{fromId}/transfer/{policyId}/to/{toId}")
+    public AgentResponse transferPolicy(@PathVariable Long fromId, @PathVariable Long toId , @PathVariable Long policyId ){
+        agentService.transferPolicy(fromId, toId, policyId);
+
+
+        return mapper.toAgentResponse(agentService.getAgentById(toId).orElseThrow(
+                () -> new IllegalArgumentException("Agent does not exists")
+        ));
+    }
 }

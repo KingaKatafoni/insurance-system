@@ -3,6 +3,7 @@ package pl.kinga.insurancesystem.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import pl.kinga.insurancesystem.model.Agent;
 import pl.kinga.insurancesystem.model.Policy;
 import pl.kinga.insurancesystem.model.PolicyType;
 
@@ -40,4 +41,6 @@ public interface PolicyRepository extends JpaRepository<Policy, Long> {
 
     @Query("SELECT DISTINCT p.holderName FROM Policy p")
     List<String> findAllHolderNames();
+
+
 }
