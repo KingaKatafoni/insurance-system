@@ -23,7 +23,7 @@ public class AgentService {
 
     @Transactional(readOnly = true)
     public List<Agent> getAllAgents(){
-        return agentRepository.findAllWithPolicies();
+        return agentRepository.findAllWithPoliciesGraph();
     }
 
 
@@ -64,7 +64,7 @@ public class AgentService {
 
     @Transactional(readOnly = true)
     public List<Agent> getAgentByLastNameContaining(String fragment){
-        return agentRepository.findByLastNameContaining(fragment);
+        return agentRepository.searchByLastNameWithPolicies(fragment);
     }
 
     @Transactional(readOnly = true)
@@ -107,4 +107,7 @@ public class AgentService {
         toAgent.getPolicies().add(policy);
         agentRepository.save(toAgent);
     }
+
+
+
 }

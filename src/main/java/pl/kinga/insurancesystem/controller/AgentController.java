@@ -25,6 +25,7 @@ public class AgentController {
 
     @GetMapping("/agents")
     public List<AgentResponse> getAllAgents(){
+        System.out.println("Agents");
         return agentService.getAllAgents().stream()
                 .map(mapper::toAgentResponse)
                 .toList();

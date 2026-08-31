@@ -29,12 +29,24 @@ public class Agent {
     )
     private List<Policy> policies = new ArrayList<>();
 
+    @Column(length = 15)
+    private String phoneNumber;
+
     public Agent() {}
 
-    public Agent( String firstName, String lastName, String email) {
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Agent(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
     public Long getId() {

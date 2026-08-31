@@ -12,6 +12,10 @@ public record AgentRequest(
 
         @NotBlank(message = "Email cannot be empty")
         @Email(message = "Invalid email format")
-        String email
-) {
+        String email,
+
+        @NotBlank(message = "Phone number cannot be empty")
+        String phoneNumber
+
+){
 }

@@ -44,7 +44,8 @@ public class DtoMapper {
                 agent.getId(),
                 fullName,
                 agent.getEmail(),
-                policyNumbers
+                policyNumbers,
+                agent.getPhoneNumber()
         );
 
     }
@@ -53,7 +54,8 @@ public class DtoMapper {
         return new Agent(
                 request.firstName(),
                 request.lastName(),
-                request.email()
+                request.email(),
+                request.phoneNumber()
         );
     }
 

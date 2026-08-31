@@ -1,5 +1,6 @@
 package pl.kinga.insurancesystem.repository;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -31,5 +32,15 @@ public interface AgentRepository extends JpaRepository<Agent, Long> {
 
     @Query("SELECT DISTINCT a FROM Agent a LEFT JOIN FETCH a.policies")
     List<Agent> findAllWithPolicies();
+
+    @EntityGraph(attributePaths = {"policies"})
+    @Query("SELECT a FROM Agent a")
+    List<Agent> findAllWithPoliciesGraph();
+
+    @EntityGraph(attributePaths = {"policies"})
+    @Query("SELECT a FROM Agent a WHERE a.lastName LIKE %:fragment%")
+    List<Agent> searchByLastNameWithPolicies(@Param("fragment") String fragment);
+
+
 
 }

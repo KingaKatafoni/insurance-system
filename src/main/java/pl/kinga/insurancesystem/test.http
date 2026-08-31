@@ -257,3 +257,109 @@ POST http://localhost:8080/agents/1/transfer/1/to/999
 
 ###Sprawdz agenta 1 czy ma nadal polise
 GET http://localhost:8080/agents/1
+
+###Lekcja 12.7
+
+###Agent 1
+POST http://localhost:8080/agents
+Content-Type: application/json
+
+{
+  "firstName": "Anna",
+  "lastName": "Kowalska",
+  "email": "anna.kowalska@ubezpieczenia.pl"
+}
+
+####Agent 2
+
+POST http://localhost:8080/agents
+Content-Type: application/json
+
+{
+  "firstName": "Mariusz",
+  "lastName": "Pudzianowski",
+  "email": "mariusz.pudzianowski@ubezpieczenia.pl"
+}
+
+####Agent 3
+
+POST http://localhost:8080/agents
+Content-Type: application/json
+
+{
+  "firstName": "Adam",
+  "lastName": "Malysz",
+  "email": "adam.malysz@ubezpieczenia.pl"
+}
+
+####Polisa 1
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+  "policyNumber": "POL-2026-001",
+  "type": "OC",
+  "holderName": "Jan Nowak",
+  "premiumAmount": 1200.00,
+  "startDate": "2026-08-25",
+  "endDate": "2027-08-25"
+}
+
+####Polisa 2
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+  "policyNumber": "POL-2026-002",
+  "type": "NA_ZYCIE",
+  "holderName": "Roman Zupa",
+  "premiumAmount": 1400.00,
+  "startDate": "2026-09-23",
+  "endDate": "2027-09-23"
+}
+
+####Polisa 3
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+  "policyNumber": "POL-2026-003",
+  "type": "AC",
+  "holderName": "Wanda Niemiec",
+  "premiumAmount": 2200.00,
+  "startDate": "2026-03-09",
+  "endDate": "2027-03-09"
+}
+
+####Polisa 4
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+  "policyNumber": "POL-2026-004",
+  "type": "MIESZKANIOWE",
+  "holderName": "Anna Dymna",
+  "premiumAmount": 200.00,
+  "startDate": "2026-07-21",
+  "endDate": "2027-07-21"
+}
+
+### Przypisz polise 1 do agenta 1
+POST http://localhost:8080/agents/1/policies/1
+
+### Przypisz polise 2 do agenta 1
+POST http://localhost:8080/agents/1/policies/2
+
+### Przypisz polise 3 do agenta 2
+POST http://localhost:8080/agents/2/policies/3
+
+### Przypisz polise 4 do agenta 3
+POST http://localhost:8080/agents/3/policies/4
+
+###Sprawdz agentow
+GET http://localhost:8080/agents
+
+
+
+
+

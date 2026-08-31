@@ -1,0 +1,1 @@
+ALTER TABLE agent ADD COLUMN phone_number VARCHAR(15);
