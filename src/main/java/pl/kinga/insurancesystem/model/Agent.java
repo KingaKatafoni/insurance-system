@@ -1,5 +1,6 @@
 package pl.kinga.insurancesystem.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -31,6 +32,17 @@ public class Agent {
 
     @Column(length = 15)
     private String phoneNumber;
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
+
+    @OneToMany(mappedBy = "agent")
+    private List<Customer> customers = new ArrayList<>();
 
     public Agent() {}
 

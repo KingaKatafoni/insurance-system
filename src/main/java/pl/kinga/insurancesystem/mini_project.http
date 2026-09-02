@@ -1,0 +1,49 @@
+### 1. Create Agent
+
+POST http://localhost:8080/agents
+Content-Type: application/json
+
+{
+  "firstName": "Mariusz",
+  "lastName": "Pudzianowski",
+  "email": "mariusz.pudzianowski@ubezpieczenia.pl",
+  "phoneNumber": "556-984-990"
+}
+
+### 2. Create Policy
+
+POST http://localhost:8080/policies
+Content-Type: application/json
+
+{
+  "policyNumber": "POL-2026-001",
+  "type": "MIESZKANIOWE",
+  "holderName": "Anna Dymna",
+  "premiumAmount": 200.00,
+  "startDate": "2026-07-21",
+  "endDate": "2027-07-21"
+}
+
+### 3. Create Customer
+POST http://localhost:8080/customers
+Content-Type: application/json
+
+{
+  "firstName": "Maria",
+  "lastName": "Wis",
+  "pesel": "93042113224",
+  "email": "maria.wis@customer.com",
+  "birthDate": "1993-04-21"
+}
+
+### 4. Assign Agent to Customer
+POST localhost:8080/customers/1/agent/1
+
+### 5. Assign Policy to Customer
+POST localhost:8080/customers/1/policies/1
+
+### 6. Check if Customer has Agent and Policy
+GET localhost:8080/customers/1
+
+### 7. Check Agent's Customers
+GET localhost:8080/customers/by-agent/1

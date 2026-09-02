@@ -2,10 +2,12 @@ package pl.kinga.insurancesystem.dto;
 
 import org.springframework.stereotype.Component;
 import pl.kinga.insurancesystem.model.Agent;
+import pl.kinga.insurancesystem.model.Customer;
 import pl.kinga.insurancesystem.model.Policy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Component
 public class DtoMapper {
@@ -56,6 +58,42 @@ public class DtoMapper {
                 request.lastName(),
                 request.email(),
                 request.phoneNumber()
+        );
+    }
+
+    public CustomerResponse toCustomerResponse(Customer customer){
+        String fullName = customer.getFirstName() + " " + customer.getLastName();
+        String agentName = null;
+        if(customer.getAgent() != null) {
+            agentName = customer.getAgent().getFirstName() + " " + customer.getAgent().getLastName();
+        }
+
+
+        List<String> policyNumbers = customer.getPolicies().stream()
+                .map(Policy::getPolicyNumber)
+                .toList();
+
+
+
+        return new CustomerResponse(
+                customer.getId(),
+                fullName,
+                customer.getPesel(),
+                customer.getEmail(),
+                customer.getBirthDate(),
+                agentName,
+                policyNumbers
+
+        );
+    }
+
+    public Customer toCustomer(CustomerRequest request){
+        return new Customer(
+                request.firstName(),
+                request.lastName(),
+                request.pesel(),
+                request.email(),
+                request.birthDate()
         );
     }
 

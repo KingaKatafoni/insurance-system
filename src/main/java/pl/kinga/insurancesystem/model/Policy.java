@@ -37,6 +37,11 @@ public class Policy {
     private List<Agent> agents = new ArrayList<>();
 
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+
     public Policy() {
     }
 
@@ -111,5 +116,13 @@ public class Policy {
 
     public void setAgents(List<Agent> agents) {
         this.agents = agents;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
